@@ -14,6 +14,7 @@ import {
 } from './actionTypes';
 
 import type { ConnectionFailedError } from './actions.native';
+import { getCurrentConnection } from './functions';
 
 /**
  * Reduces the Redux actions of the feature base/connection.
@@ -57,7 +58,7 @@ ReducerRegistry.register(
 function _connectionDisconnected(
         state: Object,
         { connection }: { connection: Object }) {
-    const connection_ = _getCurrentConnection(state);
+    const connection_ = getCurrentConnection(state);
 
     if (connection_ !== connection) {
         return state;
@@ -106,7 +107,7 @@ function _connectionFailed(
             connection: Object,
             error: ConnectionFailedError
         }) {
-    const connection_ = _getCurrentConnection(state);
+    const connection_ = getCurrentConnection(state);
 
     if (connection_ && connection_ !== connection) {
         return state;
@@ -189,19 +190,6 @@ function _constructOptions(locationURL: URL) {
             muc: `conference.${domain}`
         }
     };
-}
-
-/**
- * The current (similar to getCurrentConference in base/conference/functions.js)
- * connection which is {@code connection} or {@code connecting}.
- *
- * @param {Object} baseConnectionState - The current state of the
- * {@code 'base/connection'} feature.
- * @returns {JitsiConnection} - The current {@code JitsiConnection} if any.
- * @private
- */
-function _getCurrentConnection(baseConnectionState: Object): ?Object {
-    return baseConnectionState.connection || baseConnectionState.connecting;
 }
 
 /**

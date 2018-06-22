@@ -3,6 +3,18 @@
 import { toState } from '../redux';
 
 /**
+ * The current (similar to getCurrentConference in base/conference/functions.js)
+ * connection which is {@code connection} or {@code connecting}.
+ *
+ * @param {Object} baseConnectionState - The current state of the
+ * 'features/base/connection'.
+ * @returns {JitsiConnection} - The current {@code JitsiConnection} if any.
+ */
+export function getCurrentConnection(baseConnectionState: Object): ?Object {
+    return baseConnectionState.connection || baseConnectionState.connecting;
+}
+
+/**
  * Retrieves a simplified version of the conference/location URL stripped of URL
  * params (i.e. query/search and hash) which should be used for sending invites.
  *
